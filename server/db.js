@@ -1,4 +1,4 @@
-const Database = require('better-sqlite3');
+const initSqlJs = require('sql.js');
 const path = require('path');
 const fs = require('fs');
 
@@ -9,26 +9,93 @@ if (!fs.existsSync(dbDir)) {
 }
 
 const dbPath = path.join(dbDir, 'reunion.db');
+const localDbPath = path.join(__dirname, '..', 'data', 'reunion.db');
 
-// If running in Vercel lambda and db not in /tmp yet, copy existing repo database if present
-if (isVercel && !fs.existsSync(dbPath)) {
-  const localDb = path.join(__dirname, '..', 'data', 'reunion.db');
-  if (fs.existsSync(localDb)) {
-    try {
-      fs.copyFileSync(localDb, dbPath);
-    } catch (e) {
-      console.warn('Could not copy initial db to /tmp, will initialize fresh:', e.message);
-    }
+let rawDb = null;
+let isReady = false;
+let initPromise = null;
+
+function saveDb() {
+  if (!rawDb) return;
+  try {
+    const data = rawDb.export();
+    fs.writeFileSync(dbPath, Buffer.from(data));
+  } catch (err) {}
+}
+
+async function ensureDbReady() {
+  if (isReady && rawDb) return rawDb;
+  if (!initPromise) {
+    initPromise = (async () => {
+      const SQL = await initSqlJs();
+      let filebuffer = null;
+      if (fs.existsSync(dbPath)) {
+        try { filebuffer = fs.readFileSync(dbPath); } catch (e) {}
+      } else if (fs.existsSync(localDbPath)) {
+        try { filebuffer = fs.readFileSync(localDbPath); } catch (e) {}
+      }
+
+      if (filebuffer && filebuffer.length > 0) {
+        rawDb = new SQL.Database(filebuffer);
+      } else {
+        rawDb = new SQL.Database();
+      }
+
+      isReady = true;
+      initSchema();
+      return rawDb;
+    })();
   }
+  return initPromise;
 }
 
-const db = new Database(dbPath);
+// Start async initialization immediately
+initPromise = ensureDbReady();
 
-// Enable foreign keys & WAL mode
-if (!isVercel) {
-  db.pragma('journal_mode = WAL');
-}
-db.pragma('foreign_keys = ON');
+const db = {
+  ensureDbReady,
+  prepare(sql) {
+    return {
+      all(...params) {
+        if (!rawDb) throw new Error('Database not ready. Awaiting initialization.');
+        const flat = params.flat();
+        const stmt = rawDb.prepare(sql);
+        if (flat.length > 0) stmt.bind(flat);
+        const results = [];
+        while (stmt.step()) results.push(stmt.getAsObject());
+        stmt.free();
+        return results;
+      },
+      get(...params) {
+        if (!rawDb) throw new Error('Database not ready. Awaiting initialization.');
+        const flat = params.flat();
+        const stmt = rawDb.prepare(sql);
+        if (flat.length > 0) stmt.bind(flat);
+        let result = undefined;
+        if (stmt.step()) result = stmt.getAsObject();
+        stmt.free();
+        return result;
+      },
+      run(...params) {
+        if (!rawDb) throw new Error('Database not ready. Awaiting initialization.');
+        const flat = params.flat();
+        rawDb.run(sql, flat);
+        const changes = rawDb.getRowsModified();
+        saveDb();
+        return { changes };
+      }
+    };
+  },
+  exec(sql) {
+    if (!rawDb) return;
+    rawDb.exec(sql);
+    saveDb();
+  },
+  pragma(sql) {},
+  transaction(fn) {
+    return (...args) => fn(...args);
+  }
+};
 
 
 function initSchema() {
@@ -288,7 +355,5 @@ function initSchema() {
     );
   `);
 }
-
-initSchema();
 
 module.exports = db;

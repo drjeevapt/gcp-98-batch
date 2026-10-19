@@ -8,9 +8,6 @@ const db = require('./db');
 const { seedDatabase } = require('./seed');
 const { authenticate } = require('./middleware/auth');
 
-// Seed default data if needed
-seedDatabase();
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -18,6 +15,16 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Middleware to ensure DB is initialized before handling any request
+app.use(async (req, res, next) => {
+  try {
+    await db.ensureDbReady();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 // Global authentication extractor (attaches req.user if token or session present)
 app.use(authenticate);
@@ -116,15 +123,22 @@ if (!isVercel) {
 }, 60000);
 }
 
-if (!isVercel) {
-  app.listen(PORT, () => {
-    console.log(`====================================================`);
-    console.log(`🎓 GCP-98 Annual Batch Reunion App is running!`);
-    console.log(`🚀 URL: http://localhost:${PORT}`);
-    console.log(`📂 Database: data/reunion.db (Persistent SQLite)`);
-    console.log(`====================================================`);
-  });
+async function startServer() {
+  await db.ensureDbReady();
+  seedDatabase();
+
+  if (!isVercel) {
+    app.listen(PORT, () => {
+      console.log(`====================================================`);
+      console.log(`🎓 GCP-98 Annual Batch Reunion App is running!`);
+      console.log(`🚀 URL: http://localhost:${PORT}`);
+      console.log(`📂 Database: data/reunion.db (WASM SQLite)`);
+      console.log(`====================================================`);
+    });
+  }
 }
+
+startServer().catch(err => console.error('[Server Start Error]:', err));
 
 module.exports = app;
 

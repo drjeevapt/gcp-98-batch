@@ -1,3 +1,7 @@
 const app = require('../server/server');
+const db = require('../server/db');
 
-module.exports = app;
+module.exports = async (req, res) => {
+  await db.ensureDbReady();
+  return app(req, res);
+};
