@@ -1,6 +1,7 @@
-const initSqlJs = require('sql.js');
+const initSqlJs = require('sql.js/dist/sql-wasm-inline.js');
 const path = require('path');
 const fs = require('fs');
+
 
 const isVercel = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
 const dbDir = isVercel ? path.join('/tmp', 'data') : path.join(__dirname, '..', 'data');
