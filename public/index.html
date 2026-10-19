@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GCP Batch of 98 Reunion Portal | Government College of Physiotherapy (GCP), Trichy</title>
+  <meta name="description" content="Private, mobile-first annual batch reunion platform for Government College of Physiotherapy (GCP), Trichy - GCP Batch of 98 alumni. Multi-year events, invite-only membership, RSVP with guest & meal preferences, 6 volunteer teams, verified contributions, and audit reports.">
+  <meta name="theme-color" content="#090d16">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Sidebar Backdrop Overlay (Mobile) -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="App.toggleSidebar(false)"></div>
+
+  <!-- Left Sidebar Navigation Menu -->
+  <aside class="left-sidebar" id="left-sidebar">
+    <!-- Sidebar Header & Brand -->
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <img src="/assets/logo.jpg" alt="Government College of Physiotherapy (GCP), Trichy - Batch of 98 Emblem" class="sidebar-logo">
+        <div class="sidebar-brand-text">
+          <h2 class="sidebar-brand-title">GCP Batch of '98</h2>
+          <span class="sidebar-brand-subtitle">Govt College of Physiotherapy, Trichy</span>
+        </div>
+      </div>
+      <button class="sidebar-close-btn" onclick="App.toggleSidebar(false)" aria-label="Close Sidebar">&times;</button>
+    </div>
+
+    <!-- Active Year Badge & Quick Switcher -->
+    <div class="sidebar-edition-card">
+      <div class="edition-label">Active Edition</div>
+      <div class="edition-selector-row">
+        <span class="edition-icon">🗓️</span>
+        <select id="sidebar-year-select" class="sidebar-year-dropdown" onchange="App.handleYearChange(this.value)">
+          <option value="2026">2026 Batch Day (Trichy - Concluded)</option>
+          <option value="2027">2027 Batch Day (Oct 2027 - Planning)</option>
+          <option value="2025">2025 Silver Jubilee (Archive)</option>
+          <option value="2024">2024 Winter Reunion (Archive)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Navigation Menu Items -->
+    <nav class="sidebar-nav" aria-label="Sidebar Navigation">
+      <!-- Section 1: Main Menu -->
+      <div class="sidebar-section-header">REUNION HUB</div>
+      <button class="sidebar-nav-item active" data-tab="events" onclick="App.switchTab('events')">
+        <span class="nav-icon">🗓️</span>
+        <span class="nav-label">Events & Date Polls</span>
+        <span class="nav-badge" id="sidebar-poll-badge">Vote</span>
+      </button>
+
+      <button class="sidebar-nav-item" data-tab="rsvp" onclick="App.switchTab('rsvp')">
+        <span class="nav-icon">🎟️</span>
+        <span class="nav-label">My RSVP & Meals</span>
+        <span class="nav-badge emerald" id="sidebar-rsvp-badge">Active</span>
+      </button>
+
+      <!-- Section 2: Committee & Operations -->
+      <div class="sidebar-section-header">COMMITTEES & TEAMS</div>
+      <button class="sidebar-nav-item" data-tab="teams" onclick="App.switchTab('teams')">
+        <span class="nav-icon">👥</span>
+        <span class="nav-label">6 Volunteer Teams</span>
+      </button>
+
+      <button class="sidebar-nav-item" data-tab="tasks" onclick="App.switchTab('tasks')">
+        <span class="nav-icon">📋</span>
+        <span class="nav-label">Tasks & Deadlines</span>
+      </button>
+
+      <button class="sidebar-nav-item" data-tab="quotes" onclick="App.switchTab('quotes')">
+        <span class="nav-icon">📑</span>
+        <span class="nav-label">Vendor Quotations</span>
+      </button>
+
+      <!-- Section 3: Finance & Reports -->
+      <div class="sidebar-section-header">FINANCE & AUDIT</div>
+      <button class="sidebar-nav-item" data-tab="finance" onclick="App.switchTab('finance')">
+        <span class="nav-icon">💰</span>
+        <span class="nav-label">Treasury & Ledger</span>
+        <span class="nav-badge gold" id="sidebar-treasury-badge">Strict</span>
+      </button>
+
+      <button class="sidebar-nav-item" data-tab="reports" onclick="App.switchTab('reports')">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Exportable Reports</span>
+      </button>
+
+      <!-- Section 4: Community & Updates -->
+      <div class="sidebar-section-header">COMMUNITY & ARCHIVES</div>
+      <button class="sidebar-nav-item" data-tab="announcements" onclick="App.switchTab('announcements')">
+        <span class="nav-icon">📢</span>
+        <span class="nav-label">Updates & Reminders</span>
+      </button>
+
+      <button class="sidebar-nav-item" onclick="App.openWhatsAppModal('rsvp_alert')">
+        <span class="nav-icon" style="color: #25D366;">💬</span>
+        <span class="nav-label">WhatsApp Broadcast</span>
+      </button>
+
+      <button class="sidebar-nav-item" data-tab="archives" onclick="App.switchTab('archives')">
+        <span class="nav-icon">🏛️</span>
+        <span class="nav-label">Annual Archives</span>
+      </button>
+
+      <!-- Section 5: Administration -->
+      <div class="sidebar-section-header" id="sidebar-admin-heading">ADMINISTRATION</div>
+      <button class="sidebar-nav-item" data-tab="admin" id="sidebar-admin-item" onclick="App.switchTab('admin')">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Admin Control Center</span>
+      </button>
+    </nav>
+
+    <!-- Sidebar Mini Countdown Card -->
+    <div class="sidebar-mini-widget">
+      <div class="widget-title">⏳ Batch Day Status</div>
+      <div class="widget-value" id="sidebar-countdown">Completed</div>
+      <div class="widget-sub" id="sidebar-countdown-sub">Oct 11, 2026 • Mullai Resort, Trichy</div>
+    </div>
+
+    <!-- Sidebar User Footer -->
+    <div class="sidebar-user-footer" onclick="App.toggleDemoSelector()" title="Click to switch persona">
+      <div class="sidebar-user-avatar" id="sidebar-user-avatar">👨‍💼</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="sidebar-user-name">Jeeva</div>
+        <div class="sidebar-user-role" id="sidebar-user-role">ADMINISTRATOR</div>
+      </div>
+      <span class="sidebar-switch-icon">⇄</span>
+    </div>
+  </aside>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="top-header" id="top-header">
+    <div class="container">
+      <div class="top-bar-inner">
+        <!-- Left: Hamburger Button (Mobile/Tablet) + Breadcrumb -->
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <button class="hamburger-btn" id="hamburger-btn" onclick="App.toggleSidebar()" aria-label="Open Sidebar Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <!-- Breadcrumb / Active Page Title -->
+          <div class="top-breadcrumbs">
+            <span class="crumb-root">GCP Batch of '98</span>
+            <span class="crumb-separator">/</span>
+            <span class="crumb-current" id="top-bar-page-title">🗓️ Events & Date Polls</span>
+          </div>
+        </div>
+
+        <!-- Right Side: Year Switcher Dropdown & Persona Badge -->
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <!-- Year Switcher Dropdown -->
+          <div class="year-selector-wrap" title="Switch Event Year">
+            <span style="font-size: 0.9rem;">🗓️</span>
+            <select id="event-year-select" aria-label="Select Reunion Year" onchange="App.handleYearChange(this.value)">
+              <option value="2026">2026 (Completed - Mullai Resort, Trichy)</option>
+              <option value="2027">2027 (Planning - October Month)</option>
+              <option value="2025">2025 (Archived)</option>
+              <option value="2024">2024 (Archived)</option>
+            </select>
+          </div>
+
+          <!-- Current User Profile & Role Badge -->
+          <div class="user-menu-group">
+            <div class="persona-badge" id="current-user-badge" onclick="App.toggleDemoSelector()" title="Click to switch test persona">
+              <span class="persona-avatar" id="nav-user-avatar">👨‍💼</span>
+              <div class="persona-info">
+                <span class="persona-name" id="nav-user-name">Jeeva</span>
+                <span class="persona-role" id="nav-user-role">Admin</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Role / Persona Testing Strip -->
+    <div class="demo-role-banner" id="demo-role-banner">
+      <span style="font-weight: 700; color: var(--accent-gold); display: flex; align-items: center; gap: 6px;">
+        ⚡ Test Personas:
+      </span>
+      <div class="demo-pills" id="demo-pills-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container" id="main-content">
+
+    <!-- Hero Card with Reunion Banner & Countdown -->
+    <section class="hero-card" id="hero-section">
+      <img src="/assets/reunion-2026-family.jpg" alt="Batch Reunion Celebration" class="hero-banner-img" id="hero-img">
+      
+      <!-- Interactive Hero Photo Switcher -->
+      <div class="hero-photo-pills" id="hero-photo-switcher">
+        <button class="hero-photo-btn active" id="btn-hero-family" onclick="App.switchHeroPhoto('family')" title="View Full Batch & Families Photo">
+          👨‍👩‍👧‍👦 Family & Batch Photo
+        </button>
+        <button class="hero-photo-btn" id="btn-hero-batchmates" onclick="App.switchHeroPhoto('batchmates')" title="View Batchmates Photo">
+          🎓 Batchmates Photo
+        </button>
+        <button class="hero-photo-btn" onclick="App.openCurrentHeroPhoto()" title="Open High-Resolution Lightbox">
+          🔍 Zoom
+        </button>
+      </div>
+
+      <div class="hero-overlay">
+        <div class="hero-badges-row">
+          <span class="badge badge-emerald" id="hero-event-status">● Completed on Oct 11, 2026 (Trichy)</span>
+          <span class="badge badge-gold" id="hero-rsvp-counter">42 Attended Batchmates</span>
+          <span class="badge badge-purple" id="hero-accounts-badge">Verified Treasury: ₹45,000</span>
+        </div>
+        <h2 class="hero-title" id="hero-title">GCP Batch of 98 Annual Batch Day 2026</h2>
+        <div class="hero-theme" id="hero-theme">✨ "Nostalgia & Brotherhood in Trichy"</div>
+
+        <!-- Meta Grid -->
+        <div class="hero-meta-grid">
+          <div class="hero-meta-item">
+            <div class="meta-label">📅 Concluded Date</div>
+            <div class="meta-value" id="hero-dates">October 11, 2026</div>
+          </div>
+          <div class="hero-meta-item">
+            <div class="meta-label">📍 Venue & Location</div>
+            <div class="meta-value" id="hero-venue">Mullai Resort, Vayaloor, Trichy</div>
+          </div>
+          <div class="hero-meta-item">
+            <div class="meta-label">💳 Batch Contribution</div>
+            <div class="meta-value" id="hero-fee">₹15,000 / Member</div>
+          </div>
+          <div class="hero-meta-item">
+            <div class="meta-label">⏳ Batch Day Status</div>
+            <div class="meta-value" id="hero-countdown" style="color: var(--accent-gold-light);">🏆 Concluded on Oct 11, 2026</div>
+          </div>
+        </div>
+
+        <!-- Hero Quick Action Buttons -->
+        <div class="hero-actions-bar">
+          <button class="btn btn-primary" onclick="App.openRsvpModal()" id="hero-rsvp-btn">
+            📜 View 2026 Attendance Register
+          </button>
+          <button class="btn btn-emerald" onclick="App.openPaymentModal()" id="hero-pay-btn">
+            💰 Submit Contribution
+          </button>
+          <button class="btn btn-secondary" onclick="App.switchTab('events')" id="hero-poll-btn">
+            🗳️ View 2026 Decision
+          </button>
+          <button class="btn btn-whatsapp" onclick="App.openWhatsAppModal('rsvp_alert')" id="hero-wa-btn">
+            💬 Share WhatsApp Update
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2027 Planning Banner Alert -->
+    <div class="glass-card mb-20" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(99, 102, 241, 0.12) 100%); border-left: 4px solid var(--accent-gold); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; padding: 16px 20px;">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="font-size: 2rem;">🗓️</span>
+        <div>
+          <h4 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 3px;">
+            2026 Batch Day Concluded • Planning 2027 Batch Day in October!
+          </h4>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0; line-height: 1.5;">
+            Current year Batch Day was successfully celebrated on <strong>October 11, 2026 at Mullai Resort, Vayaloor, Trichy</strong>. Date polls are now open for candidate weekends in <strong>October 2027</strong>.
+          </p>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="App.handleYearChange('2027'); App.switchTab('events');" style="white-space: nowrap;">
+        🗳️ Switch to 2027 Planning & Date Polls &rarr;
+      </button>
+    </div>
+
+    <!-- ====================================================================
+         SECTION 1: EVENTS & DATE POLLS
+         ==================================================================== -->
+    <section class="section active" id="tab-events">
+      <!-- 2026 Batch Day Photo Memories & Moments Showcase -->
+      <div class="glass-card mb-20" id="memories-2026-card">
+        <div class="flex-between mb-12">
+          <div>
+            <span class="badge badge-emerald">📸 Trichy 2026 Official Memories</span>
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #fff; margin-top: 6px;">
+              GCP-98 Annual Batch Day 2026 Photo Gallery
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">
+              📍 Mullai Resort, Vayaloor, Trichy • Celebrated on October 11, 2026
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <span class="badge badge-gold">2 High-Res Photos</span>
+          </div>
+        </div>
+
+        <div class="grid-2" style="gap: 16px;">
+          <!-- Photo 1: Family & Batch Photo -->
+          <div class="photo-card" onclick="App.openPhotoModal('/assets/reunion-2026-family.jpg', 'GCP-98 Alumni & Families Reunion 2026', 'Full gathering of batchmates, spouses, and kids seated and standing together at Mullai Resort, Trichy.')">
+            <div class="photo-card-img-wrap">
+              <img src="/assets/reunion-2026-family.jpg" alt="GCP-98 Alumni & Families Reunion 2026" class="photo-card-img">
+              <div class="photo-card-badge">👨‍👩‍👧‍👦 Full Batch & Families</div>
+              <div class="photo-card-zoom-hint">🔍 Click to zoom</div>
+            </div>
+            <div class="photo-card-body">
+              <div class="photo-card-title">GCP-98 Alumni & Families Gathering</div>
+              <div class="photo-card-caption">Batchmates reunited with spouses and children at Mullai Resort banquet hall, Trichy.</div>
+            </div>
+          </div>
+
+          <!-- Photo 2: Batchmates Photo -->
+          <div class="photo-card" onclick="App.openPhotoModal('/assets/reunion-2026-batchmates.jpg', 'GCP-98 Batchmates Gathering 2026', 'Alumni of Government College of Physiotherapy Batch of 1998 standing side-by-side.')">
+            <div class="photo-card-img-wrap">
+              <img src="/assets/reunion-2026-batchmates.jpg" alt="GCP-98 Batchmates Gathering 2026" class="photo-card-img">
+              <div class="photo-card-badge">🎓 Batchmates Group</div>
+              <div class="photo-card-zoom-hint">🔍 Click to zoom</div>
+            </div>
+            <div class="photo-card-body">
+              <div class="photo-card-title">Batch of 1998 Alumni Group</div>
+              <div class="photo-card-caption">Nostalgia & brotherhood: Batchmates standing together at Mullai Resort banquet hall.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🗳️ Date Polls & Reunion Scheduling</h2>
+          <p class="section-sub">Members vote on proposed dates and venues to lock the reunion weekend</p>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="App.openNewPollModal()" id="btn-create-poll">
+          + Create Date Poll
+        </button>
+      </div>
+
+      <!-- Date Poll Container -->
+      <div id="polls-container">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Multi-Year Event Directory -->
+      <div class="glass-card mt-12">
+        <div class="flex-between mb-12">
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;">
+            📚 All Yearly Batch Reunion Editions
+          </h3>
+          <button class="btn btn-secondary btn-sm" onclick="App.openNewEventModal()" id="btn-new-event">
+            + Add New Year Event
+          </button>
+        </div>
+        <div id="all-events-grid" class="grid-2">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 2: RSVP WITH GUESTS & MEAL COUNTS
+         ==================================================================== -->
+    <section class="section" id="tab-rsvp">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🎟️ RSVP & Guest Management</h2>
+          <p class="section-sub">Meal choices, family guest headcounts, and room allotments</p>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="App.openRsvpModal()">
+          ✏️ Update My RSVP
+        </button>
+      </div>
+
+      <!-- Aggregate Catering & Hospitality Metric Cards -->
+      <div class="grid-3 mb-12" id="rsvp-summary-metrics">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Current User RSVP Summary Card -->
+      <div class="glass-card" id="my-rsvp-card">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Attendees Roster Table -->
+      <div class="glass-card">
+        <div class="flex-between mb-12">
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;">
+            📋 Batch Attendees Register
+          </h3>
+          <div class="gap-8" style="display: flex;">
+            <a href="/api/reports/attendance.csv" class="btn btn-secondary btn-sm" download>
+              📥 Download CSV
+            </a>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="attendees-table">
+            <thead>
+              <tr>
+                <th>Batchmate</th>
+                <th>Status</th>
+                <th>Headcount</th>
+                <th>Meal Preference</th>
+                <th>Dietary Notes</th>
+                <th>Room</th>
+                <th>Travel Arrival</th>
+              </tr>
+            </thead>
+            <tbody id="attendees-table-body">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 3: SIX VOLUNTEER TEAMS (2 COORDINATORS EACH)
+         ==================================================================== -->
+    <section class="section" id="tab-teams">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">👥 Volunteer Committee Teams</h2>
+          <p class="section-sub">Six designated teams with two coordinators each organizing our batch reunion</p>
+        </div>
+      </div>
+
+      <div class="grid-2" id="teams-grid">
+        <!-- Rendered dynamically: 6 teams with 2 coordinators each -->
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 4: TASKS & DEADLINES
+         ==================================================================== -->
+    <section class="section" id="tab-tasks">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">📋 Task Ownership & Deadlines</h2>
+          <p class="section-sub">Action items, priorities, and ownership tracking across all 6 teams</p>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="App.openCreateTaskModal()">
+          + Add New Task
+        </button>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="glass-card mb-12" style="padding: 12px 16px;">
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Filter:</span>
+          <button class="btn btn-sm btn-secondary active-filter" onclick="App.filterTasks('all', this)">All Tasks</button>
+          <button class="btn btn-sm btn-secondary" onclick="App.filterTasks('urgent', this)">🚨 Urgent</button>
+          <button class="btn btn-sm btn-secondary" onclick="App.filterTasks('mine', this)">👤 Assigned To Me</button>
+          <button class="btn btn-sm btn-secondary" onclick="App.filterTasks('todo', this)">To Do</button>
+          <button class="btn btn-sm btn-secondary" onclick="App.filterTasks('in_progress', this)">In Progress</button>
+          <button class="btn btn-sm btn-secondary" onclick="App.filterTasks('completed', this)">Completed</button>
+        </div>
+      </div>
+
+      <!-- Tasks Grid -->
+      <div class="grid-2" id="tasks-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 5: QUOTATIONS / VENDOR BIDS
+         ==================================================================== -->
+    <section class="section" id="tab-quotes">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">📑 Vendor Quotations & Bids</h2>
+          <p class="section-sub">Upload, evaluate, and approve quotes for venue, catering, sound, and mementos</p>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="App.openUploadQuoteModal()">
+          + Upload Quotation
+        </button>
+      </div>
+
+      <div class="grid-2" id="quotes-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 6: TREASURY, CONTRIBUTIONS & VERIFICATION
+         ==================================================================== -->
+    <section class="section" id="tab-finance">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">💰 Treasury & Financial Ledger</h2>
+          <p class="section-sub">Transparent batch collections, strict Accounts Volunteer verification, and expenses</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-emerald btn-sm" onclick="App.openPaymentModal()">
+            + Submit Contribution
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="App.openExpenseModal()" id="btn-log-expense">
+            - Log Expense
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Treasury Meter -->
+      <div class="treasury-meter-card" id="treasury-card">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Strict Accounts Volunteer Guard Notice -->
+      <div class="accounts-volunteer-alert">
+        <span style="font-size: 1.3rem;">🛡️</span>
+        <div>
+          <strong>Strict Accounts Volunteer Verification Rule:</strong>
+          Payments submitted by batchmates are marked <em>Pending</em> and <strong>cannot be verified</strong> until an authorised Accounts Volunteer (Padmaraj or Nichoelles) or Admin confirms the bank credit.
+        </div>
+      </div>
+
+      <!-- Contributions Table -->
+      <div class="glass-card">
+        <div class="flex-between mb-12">
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;">
+            💳 Member Contributions & Pledges
+          </h3>
+          <span class="badge badge-gold" id="pending-verification-badge">2 Pending Verification</span>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="contributions-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Member</th>
+                <th>Amount</th>
+                <th>Mode</th>
+                <th>Reference / UTR</th>
+                <th>Status</th>
+                <th>Verified By</th>
+                <th>Verification Actions</th>
+              </tr>
+            </thead>
+            <tbody id="contributions-table-body">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Itemized Expenses Table -->
+      <div class="glass-card mt-12">
+        <div class="flex-between mb-12">
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;">
+            🧾 Reunion Expenses & Disbursements
+          </h3>
+          <a href="/api/reports/accounts.csv" class="btn btn-secondary btn-sm" download>
+            📥 Export Accounts CSV
+          </a>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="expenses-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Team</th>
+                <th>Category</th>
+                <th>Item Description</th>
+                <th>Vendor</th>
+                <th>Amount</th>
+                <th>Paid Mode</th>
+                <th>Receipt</th>
+              </tr>
+            </thead>
+            <tbody id="expenses-table-body">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 7: ANNOUNCEMENTS & REMINDERS
+         ==================================================================== -->
+    <section class="section" id="tab-announcements">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">📢 Announcements & Scheduled Reminders</h2>
+          <p class="section-sub">Broadcasts, email alerts, scheduled triggers, and 1-click WhatsApp updates</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-primary btn-sm" onclick="App.openAnnouncementModal()">
+            + Post Announcement
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="App.openScheduleReminderModal()">
+            ⏰ Schedule Email Alert
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick WhatsApp Generator Widget -->
+      <div class="glass-card" style="border: 1px solid rgba(37, 211, 102, 0.4); background: rgba(37, 211, 102, 0.05);">
+        <div class="flex-between mb-12">
+          <div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #25D366; display: flex; align-items: center; gap: 8px;">
+              💬 Manually Shared WhatsApp Updates
+            </h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">
+              Generate professionally formatted reunion updates with 1-click WhatsApp group sharing
+            </p>
+          </div>
+          <button class="btn btn-whatsapp btn-sm" onclick="App.openWhatsAppModal('rsvp_alert')">
+            🚀 Open WhatsApp Composer
+          </button>
+        </div>
+      </div>
+
+      <!-- Announcements Board -->
+      <div class="grid-2 mb-12" id="announcements-container">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Scheduled Email Reminders Queue -->
+      <div class="glass-card">
+        <div class="flex-between mb-12">
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;">
+            ⏰ Scheduled Reminders & Email Queue
+          </h3>
+          <button class="btn btn-secondary btn-sm" onclick="App.loadSentRemindersLog()">
+            📬 View Sent Reminders Inbox
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="reminders-table">
+            <thead>
+              <tr>
+                <th>Scheduled At</th>
+                <th>Target Audience</th>
+                <th>Subject</th>
+                <th>Status</th>
+                <th>Sent Count</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="reminders-table-body">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 8: ANNUAL ARCHIVES (2026, 2025, 2024, etc.)
+         ==================================================================== -->
+    <section class="section" id="tab-archives">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🏛️ Annual Archives & Retrospective</h2>
+          <p class="section-sub">Read-only historical records, audited balance sheets, and memory galleries</p>
+        </div>
+      </div>
+
+      <!-- 2026 Archive Showcase -->
+      <div class="glass-card mb-20">
+        <div class="flex-between mb-12">
+          <div>
+            <span class="badge badge-emerald">Archived & Audited</span>
+            <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: #fff; margin-top: 6px;">
+              GCP-98 Annual Batch Day 2026
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              📍 Mullai Resort, Vayaloor, Trichy • October 11, 2026
+            </p>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Closing Treasury Balance</div>
+            <div style="font-size: 1.25rem; font-weight: 800; color: #34d399;">₹45,000 in Escrow</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <div style="position: relative; cursor: pointer; border-radius: var(--radius-md); overflow: hidden; height: 170px; border: 1px solid var(--border-medium);" onclick="App.openPhotoModal('/assets/reunion-2026-family.jpg', '2026 Reunion Family & Batch Photo', 'Mullai Resort, Trichy')">
+              <img src="/assets/reunion-2026-family.jpg" alt="2026 Reunion Family Photo" style="width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; bottom: 4px; left: 4px; background: rgba(0,0,0,0.7); font-size: 0.65rem; color: #fff; padding: 2px 6px; border-radius: 4px;">👨‍👩‍👧‍👦 Family & Batch</span>
+            </div>
+            <div style="position: relative; cursor: pointer; border-radius: var(--radius-md); overflow: hidden; height: 170px; border: 1px solid var(--border-medium);" onclick="App.openPhotoModal('/assets/reunion-2026-batchmates.jpg', '2026 Reunion Batchmates Photo', 'Mullai Resort, Trichy')">
+              <img src="/assets/reunion-2026-batchmates.jpg" alt="2026 Reunion Batchmates Photo" style="width: 100%; height: 100%; object-fit: cover;">
+              <span style="position: absolute; bottom: 4px; left: 4px; background: rgba(0,0,0,0.7); font-size: 0.65rem; color: #fff; padding: 2px 6px; border-radius: 4px;">🎓 Batchmates</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; justify-content: space-between;">
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+              Official Batch Day celebration of Government College of Physiotherapy (GCP) Batch of '98 at Mullai Resort, Vayaloor, Trichy. 42 batchmates and family guests gathered for the traditional reunion feast, felicitations, and nostalgic memories.
+            </p>
+            <div class="stat-card stat-emerald mt-12" style="padding: 12px;">
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Final Audited Accounts Summary</div>
+              <div style="font-size: 0.85rem; margin-top: 4px;">
+                Total Collections: <strong>₹1,80,000</strong> • Total Expenses: <strong>₹1,35,000</strong> • Surplus Escrowed: <strong>₹45,000</strong>. Audited & Verified by Padmaraj & Nichoelles.
+              </div>
+            </div>
+            <div style="margin-top: 14px; display: flex; gap: 8px;">
+              <button class="btn btn-secondary btn-sm" onclick="App.handleYearChange('2026'); App.switchTab('events');">
+                🔍 Inspect 2026 Batch Day Records
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2025 Archive Showcase -->
+      <div class="glass-card mb-12">
+        <div class="flex-between mb-12">
+          <div>
+            <span class="badge badge-emerald">Archived & Audited</span>
+            <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: #fff; margin-top: 6px;">
+              GCP-98 Silver Jubilee Homecoming 2025
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              📍 Royal Orchid Convention Resort, Lonavala • Dec 12 - 14, 2025
+            </p>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Audited Balance</div>
+            <div style="font-size: 1.25rem; font-weight: 800; color: #34d399;">₹0 (Balanced)</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <img src="/assets/archive-2024.jpg" alt="Silver Jubilee Memory Photo" style="width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-medium); object-fit: cover;">
+          </div>
+          <div style="display: flex; flex-direction: column; justify-content: space-between;">
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+              Historical 25-Year celebration reuniting 48 batchmates and their families. Highlights included the campus walk, lighting the hostel lamp, releasing the Silver Commemorative Yearbook, and establishing the GCP-98 Alumni Student Scholarship Endowment at Government College of Physiotherapy, Trichy.
+            </p>
+            <div class="stat-card stat-emerald mt-12" style="padding: 12px;">
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Final Audited Accounts Summary</div>
+              <div style="font-size: 0.85rem; margin-top: 4px;">
+                Total Collections: <strong>₹7,20,000</strong> • Total Expenses: <strong>₹7,20,000</strong> • Audit Confirmed by Padmaraj & Nichoelles (Accounts Volunteers).
+              </div>
+            </div>
+            <div style="margin-top: 14px; display: flex; gap: 8px;">
+              <button class="btn btn-secondary btn-sm" onclick="App.handleYearChange('2025')">
+                🔍 Inspect 2025 Archive Ledger
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 9: EXPORTABLE REPORTS & AUDIT SHEETS
+         ==================================================================== -->
+    <section class="section" id="tab-reports">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">📊 Exportable Attendance & Accounts Reports</h2>
+          <p class="section-sub">Download official CSVs and generate printable audit balance sheets</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Attendance Report Card -->
+        <div class="glass-card">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">📋</div>
+          <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: var(--text-main);">
+            Official Attendance & Logistics Register
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 8px 0 16px;">
+            Complete roster with member contact numbers, adult & children headcounts, veg/non-veg/jain meal preferences, and hotel room requirements.
+          </p>
+          <div style="display: flex; gap: 8px;">
+            <a href="/api/reports/attendance.csv" class="btn btn-primary btn-sm" download>
+              📥 Download Attendance CSV
+            </a>
+            <button class="btn btn-secondary btn-sm" onclick="App.openPrintableReport('attendance')">
+              🖨️ Printable Preview
+            </button>
+          </div>
+        </div>
+
+        <!-- Accounts Report Card -->
+        <div class="glass-card">
+          <div style="font-size: 2.2rem; margin-bottom: 8px;">💰</div>
+          <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: var(--text-main);">
+            Financial Audit & Treasury Statement
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 8px 0 16px;">
+            Verified contributions breakdown, pending payments log, itemized vendor expenses, cash flow balance, and auditor verification timestamps.
+          </p>
+          <div style="display: flex; gap: 8px;">
+            <a href="/api/reports/accounts.csv" class="btn btn-emerald btn-sm" download>
+              📥 Download Accounts CSV
+            </a>
+            <button class="btn btn-secondary btn-sm" onclick="App.openPrintableReport('accounts')">
+              🖨️ Printable Statement
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 10: ADMINISTRATOR DASHBOARD
+         ==================================================================== -->
+    <section class="section" id="tab-admin">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">⚙️ Administrator Control Center</h2>
+          <p class="section-sub">Member roles, invite tokens, database backups, and security audit logs</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <a href="/api/backup/download" class="btn btn-emerald btn-sm" download>
+            💾 Download Database Backup (.sqlite)
+          </a>
+          <a href="/api/backup/export-json" class="btn btn-secondary btn-sm" download>
+            📦 Download JSON Snapshot
+          </a>
+        </div>
+      </div>
+
+      <!-- Admin Stat Counters -->
+      <div class="grid-3 mb-12" id="admin-stats-grid">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Invite Code Generator -->
+      <div class="glass-card">
+        <div class="flex-between mb-12">
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;">
+            🎟️ Invite-Only Passcodes & Registration Tokens
+          </h3>
+          <button class="btn btn-primary btn-sm" onclick="App.openCreateInviteModal()">
+            + Generate Invite Code
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="invite-codes-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Role</th>
+                <th>Assigned Team</th>
+                <th>Quota Used</th>
+                <th>Notes</th>
+                <th>Share Link</th>
+              </tr>
+            </thead>
+            <tbody id="invite-codes-body">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Member Roster & Role Manager -->
+      <div class="glass-card mt-12">
+        <div class="flex-between mb-12">
+          <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;">
+            👥 Batch Directory & Role Manager
+          </h3>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="admin-members-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone / WhatsApp</th>
+                <th>City</th>
+                <th>Assigned Role</th>
+                <th>Team</th>
+                <th>Change Role</th>
+              </tr>
+            </thead>
+            <tbody id="admin-members-body">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Security Audit Trail -->
+      <div class="glass-card mt-12">
+        <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-bottom: 12px;">
+          🛡️ Real-Time Audit Trail
+        </h3>
+        <div class="table-responsive">
+          <table class="data-table" id="admin-audit-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>User</th>
+                <th>Action</th>
+                <th>Audit Details</th>
+              </tr>
+            </thead>
+            <tbody id="admin-audit-body">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile Floating Bottom Navigation Bar -->
+  <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+    <button class="mobile-tab-btn active" data-tab="events" onclick="App.switchTab('events')">
+      <span class="tab-icon">🗓️</span>
+      <span class="tab-label">Events</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="rsvp" onclick="App.switchTab('rsvp')">
+      <span class="tab-icon">🎟️</span>
+      <span class="tab-label">RSVP</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="teams" onclick="App.switchTab('teams')">
+      <span class="tab-icon">👥</span>
+      <span class="tab-label">Teams</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="finance" onclick="App.switchTab('finance')">
+      <span class="tab-icon">💰</span>
+      <span class="tab-label">Treasury</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="announcements" onclick="App.switchTab('announcements')">
+      <span class="tab-icon">📢</span>
+      <span class="tab-label">Updates</span>
+    </button>
+    <button class="mobile-tab-btn" data-tab="admin" onclick="App.switchTab('admin')">
+      <span class="tab-icon">⚙️</span>
+      <span class="tab-label">Admin</span>
+    </button>
+  </nav>
+
+  <!-- ====================================================================
+       MODALS
+       ==================================================================== -->
+
+  <!-- RSVP Modal -->
+  <div class="modal-backdrop" id="modal-rsvp">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">🎟️ Your Reunion RSVP & Preferences</h3>
+        <button class="modal-close-btn" onclick="App.closeModal('modal-rsvp')">&times;</button>
+      </div>
+      <form id="form-rsvp" onsubmit="App.handleRsvpSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Attendance Status</label>
+          <select class="form-control" id="rsvp-status" required>
+            <option value="attending">🎉 Yes, I am Attending!</option>
+            <option value="tentative">🤔 Tentative / Awaiting Confirmation</option>
+            <option value="declined">❌ Unable to Attend</option>
+          </select>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Spouse / Adult Guests (+)</label>
+            <input type="number" class="form-control" id="rsvp-adults" min="0" max="5" value="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Kids Count (0-12 yrs)</label>
+            <input type="number" class="form-control" id="rsvp-kids" min="0" max="5" value="0">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Primary Meal Preference</label>
+          <select class="form-control" id="rsvp-meal">
+            <option value="veg">Pure Vegetarian</option>
+            <option value="non_veg">Non-Vegetarian (Chicken & Fish)</option>
+            <option value="jain">Strict Jain (No Root Veg)</option>
+            <option value="vegan">Vegan</option>
+            <option value="kids">Child Friendly Meal</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Dietary Restrictions / Allergies</label>
+          <input type="text" class="form-control" id="rsvp-dietary" placeholder="e.g. Nut allergy, gluten sensitive, lactose intolerant">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="rsvp-accommodation" value="1">
+            <span>Need Resort Room Allotment (Included in Package)</span>
+          </label>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Arrival Date</label>
+            <input type="date" class="form-control" id="rsvp-arrival" value="2026-11-20">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Departure Date</label>
+            <input type="date" class="form-control" id="rsvp-departure" value="2026-11-22">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Travel Mode / Flight Details</label>
+          <input type="text" class="form-control" id="rsvp-travel" placeholder="e.g. Flight 6E-204 arriving Mopa 11:30 AM, need shuttle">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Special Notes / Roommate Request</label>
+          <textarea class="form-control" id="rsvp-notes" rows="2" placeholder="Any nostalgic request or preferences..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Save RSVP Details</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Submit Payment Modal -->
+  <div class="modal-backdrop" id="modal-payment">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">💰 Submit Reunion Contribution</h3>
+        <button class="modal-close-btn" onclick="App.closeModal('modal-payment')">&times;</button>
+      </div>
+
+      <!-- Bank Details Box -->
+      <div class="bank-info-box mb-12">
+        <div>
+          <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Reunion Bank Account</div>
+          <div style="font-weight: 700; color: #fff;">HDFC Bank • A/C: 50100498989801</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">IFSC: HDFC0001998</div>
+        </div>
+        <div class="upi-chip" onclick="App.copyText('gcp98reunion@hdfcbank', 'UPI ID copied to clipboard!')">
+          <span>📲 gcp98reunion@hdfcbank</span>
+          <span style="font-size: 0.7rem;">📋</span>
+        </div>
+      </div>
+
+      <form id="form-payment" onsubmit="App.handlePaymentSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Contribution Amount (INR)</label>
+          <input type="number" class="form-control" id="pay-amount" required value="15000" min="1000">
+          <small style="color: var(--text-muted); font-size: 0.72rem;">Standard member fee is ₹15,000. Voluntary sponsor pledges welcome.</small>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Payment Method</label>
+            <select class="form-control" id="pay-method">
+              <option value="UPI">Google Pay / PhonePe / Paytm (UPI)</option>
+              <option value="NEFT">NEFT / RTGS</option>
+              <option value="Bank Transfer">IMPS / Net Banking</option>
+              <option value="Zelle">Zelle / Wire (International)</option>
+              <option value="Cash">Cash / Cheque</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Date</label>
+            <input type="date" class="form-control" id="pay-date" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Bank Reference / UTR Number</label>
+          <input type="text" class="form-control" id="pay-ref" required placeholder="e.g. 429188291029 or NEFT-N2610129">
+          <small style="color: var(--accent-gold); font-size: 0.72rem;">⚠️ Required for Accounts Volunteer verification.</small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Upload Screenshot / Receipt Proof</label>
+          <input type="file" class="form-control" id="pay-proof" accept="image/*,.pdf">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Remarks</label>
+          <input type="text" class="form-control" id="pay-notes" placeholder="e.g. Payment for self + spouse pledge">
+        </div>
+
+        <button type="submit" class="btn btn-emerald btn-block">Submit for Verification</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Accounts Volunteer Verification Dialog Modal -->
+  <div class="modal-backdrop" id="modal-verify-contrib">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">🛡️ Confirm Contribution Verification</h3>
+        <button class="modal-close-btn" onclick="App.closeModal('modal-verify-contrib')">&times;</button>
+      </div>
+      <div id="verify-modal-details" style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+        <!-- Details injected dynamically -->
+      </div>
+      <div class="form-group">
+        <label class="form-label">Auditor Verification Note</label>
+        <input type="text" class="form-control" id="verify-notes" placeholder="e.g. Bank credit reconciled in HDFC statement. Official receipt issued.">
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button type="button" class="btn btn-emerald btn-block" id="btn-confirm-verify" onclick="App.executeVerifyPayment()">
+          ✅ Confirm & Mark Verified
+        </button>
+        <button type="button" class="btn btn-danger btn-block" id="btn-reject-verify" onclick="App.executeRejectPayment()">
+          ❌ Reject Payment
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Task Modal -->
+  <div class="modal-backdrop" id="modal-create-task">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">📋 Add Volunteer Team Task</h3>
+        <button class="modal-close-btn" onclick="App.closeModal('modal-create-task')">&times;</button>
+      </div>
+      <form id="form-create-task" onsubmit="App.handleTaskSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Volunteer Team</label>
+          <select class="form-control" id="task-team" required>
+            <option value="finance">💰 Finance & Accounts</option>
+            <option value="venue">🏨 Venue & Hospitality</option>
+            <option value="catering">🍽️ Food & Menu</option>
+            <option value="entertainment">🎸 Entertainment & Mementos</option>
+            <option value="logistics">🚐 Transport</option>
+            <option value="comms">📢 Communications & Outreach</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Task Title</label>
+          <input type="text" class="form-control" id="task-title" required placeholder="e.g. Finalize DJ contract & LED wall setup">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description & Scope</label>
+          <textarea class="form-control" id="task-desc" rows="2" placeholder="Details and deliverables..."></textarea>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Assign To</label>
+            <select class="form-control" id="task-assignee">
+              <!-- Rendered dynamically -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Priority</label>
+            <select class="form-control" id="task-priority">
+              <option value="urgent">🚨 Urgent (Critical)</option>
+              <option value="high">High</option>
+              <option value="medium" selected>Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Due Date Deadline</label>
+          <input type="date" class="form-control" id="task-deadline" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Save Task</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Upload Quotation Modal -->
+  <div class="modal-backdrop" id="modal-quote">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">📑 Upload Vendor Quotation</h3>
+        <button class="modal-close-btn" onclick="App.closeModal('modal-quote')">&times;</button>
+      </div>
+      <form id="form-quote" onsubmit="App.handleQuoteSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Team Category</label>
+          <select class="form-control" id="quote-team" required>
+            <option value="venue">Venue & Hospitality</option>
+            <option value="catering">Food & Menu</option>
+            <option value="entertainment">Entertainment & Mementos</option>
+            <option value="logistics">Transport</option>
+            <option value="finance">Finance & Auditing</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Vendor / Company Name</label>
+          <input type="text" class="form-control" id="quote-vendor" required placeholder="e.g. SoundWave AV Productions">
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Service Type</label>
+            <select class="form-control" id="quote-category">
+              <option value="venue">Resort & Stay</option>
+              <option value="catering">Banquet & Dining</option>
+              <option value="av_sound">DJ & Stage Lighting</option>
+              <option value="memento">Hoodies & Yearbook</option>
+              <option value="transport">Coaches & Airport Shuttle</option>
+              <option value="misc">Miscellaneous</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Quoted Amount (INR)</label>
+            <input type="number" class="form-control" id="quote-amount" required placeholder="₹">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Quotation Document (PDF / Image)</label>
+          <input type="file" class="form-control" id="quote-file" accept=".pdf,image/*">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Scope of Work & Notes</label>
+          <textarea class="form-control" id="quote-notes" rows="2" placeholder="Details of inclusions, GST, terms..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Upload Quotation</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Log Expense Modal -->
+  <div class="modal-backdrop" id="modal-expense">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">🧾 Record Reunion Expense</h3>
+        <button class="modal-close-btn" onclick="App.closeModal('modal-expense')">&times;</button>
+      </div>
+      <form id="form-expense" onsubmit="App.handleExpenseSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Responsible Team</label>
+          <select class="form-control" id="exp-team" required>
+            <option value="venue">Venue & Hospitality</option>
+            <option value="catering">Food & Menu</option>
+            <option value="entertainment">Entertainment & Mementos</option>
+            <option value="logistics">Transport</option>
+            <option value="comms">Communications & Outreach</option>
+            <option value="finance">Finance & Treasury</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Expense Title</label>
+          <input type="text" class="form-control" id="exp-title" required placeholder="e.g. Resort Token Advance (10 rooms)">
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Amount (INR)</label>
+            <input type="number" class="form-control" id="exp-amount" required placeholder="₹">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Disbursement Date</label>
+            <input type="date" class="form-control" id="exp-date" required>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Vendor / Payee</label>
+            <input type="text" class="form-control" id="exp-vendor" placeholder="e.g. Heritage Palms Resort">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Mode</label>
+            <select class="form-control" id="exp-mode">
+              <option value="Bank Transfer">Bank Transfer (NEFT/RTGS)</option>
+              <option value="UPI">UPI Payment</option>
+              <option value="Cheque">Cheque</option>
+              <option value="Cash">Cash</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Upload Receipt / Invoice</label>
+          <input type="file" class="form-control" id="exp-receipt" accept="image/*,.pdf">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Record Expense</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Post Announcement Modal -->
+  <div class="modal-backdrop" id="modal-announcement">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">📢 Broadcast Announcement</h3>
+        <button class="modal-close-btn" onclick="App.closeModal('modal-announcement')">&times;</button>
+      </div>
+      <form id="form-announcement" onsubmit="App.handleAnnouncementSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Announcement Title</label>
+          <input type="text" class="form-control" id="anc-title" required placeholder="e.g. Gala Dinner Menu Tasting Complete!">
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Priority</label>
+            <select class="form-control" id="anc-priority">
+              <option value="urgent">🚨 Urgent Alert</option>
+              <option value="important">⭐ Important Notice</option>
+              <option value="normal" selected>Normal Update</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="margin-top: 24px; display: flex; align-items: center; gap: 8px;">
+              <input type="checkbox" id="anc-pinned" value="1">
+              <span>Pin to Top of Feed</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Content</label>
+          <textarea class="form-control" id="anc-content" rows="4" required placeholder="Write the update to your batchmates..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Publish Announcement</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Schedule Reminder Modal -->
+  <div class="modal-backdrop" id="modal-schedule-reminder">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">⏰ Schedule Email Reminder</h3>
+        <button class="modal-close-btn" onclick="App.closeModal('modal-schedule-reminder')">&times;</button>
+      </div>
+      <form id="form-schedule-reminder" onsubmit="App.handleScheduleReminderSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Reminder Name</label>
+          <input type="text" class="form-control" id="rem-title" required placeholder="e.g. 7-Day RSVP Deadline Reminder">
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Target Audience</label>
+            <select class="form-control" id="rem-audience">
+              <option value="pending_rsvp">Batchmates with Pending RSVP</option>
+              <option value="pending_payment">Batchmates with Unverified Payments</option>
+              <option value="coordinators">All Volunteer Coordinators</option>
+              <option value="all">Entire 1998 Batch (All Members)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Trigger Date & Time</label>
+            <input type="datetime-local" class="form-control" id="rem-time" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Subject</label>
+          <input type="text" class="form-control" id="rem-subject" required placeholder="[GCP-98 Reunion] ⏳ Important Update">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Message Body</label>
+          <textarea class="form-control" id="rem-body" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Schedule Email Alert</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- WhatsApp Broadcast Composer Modal -->
+  <div class="modal-backdrop" id="modal-whatsapp">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: #25D366;">💬 1-Click WhatsApp Broadcast Generator</h3>
+        <button class="modal-close-btn" onclick="App.closeModal('modal-whatsapp')">&times;</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Select Message Template</label>
+        <select class="form-control" id="wa-template-select" onchange="App.generateWhatsAppText()">
+          <option value="rsvp_alert">🎟️ RSVP Deadline Countdown Alert</option>
+          <option value="payment_alert">💰 Contribution Dues & Bank UPI Details</option>
+          <option value="poll_alert">🗳️ Date Poll Voting Reminder</option>
+          <option value="general">🎓 General Reunion Announcement</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Custom Message Addition (Optional)</label>
+        <input type="text" class="form-control" id="wa-custom-notes" placeholder="e.g. Please reply to Sameer for special meals!" oninput="App.generateWhatsAppText()">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">WhatsApp Formatted Preview</label>
+        <div id="wa-preview-bubble" style="background: rgba(30, 41, 59, 0.9); border: 1px solid var(--border-medium); border-left: 4px solid #25D366; border-radius: var(--radius-md); padding: 14px; font-family: monospace; font-size: 0.85rem; color: #fff; white-space: pre-wrap; max-height: 200px; overflow-y: auto;">
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button type="button" class="btn btn-whatsapp btn-block" onclick="App.openWhatsAppShare()">
+          🚀 Share to WhatsApp Group
+        </button>
+        <button type="button" class="btn btn-secondary btn-block" onclick="App.copyWhatsAppText()">
+          📋 Copy Formatted Text
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generate Invite Code Modal -->
+  <div class="modal-backdrop" id="modal-invite">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">🎟️ Generate Batch Invite Token</h3>
+        <button class="modal-close-btn" onclick="App.closeModal('modal-invite')">&times;</button>
+      </div>
+      <form id="form-invite" onsubmit="App.handleCreateInvite(event)">
+        <div class="form-group">
+          <label class="form-label">Invite Code String</label>
+          <input type="text" class="form-control" id="inv-code" required placeholder="e.g. GCP98-VIP or BATCH98-SPECIAL" style="text-transform: uppercase;">
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label">Default Role Granted</label>
+            <select class="form-control" id="inv-role">
+              <option value="member">Batch Member</option>
+              <option value="coordinator">Volunteer Coordinator</option>
+              <option value="accounts_volunteer">Accounts Volunteer</option>
+              <option value="admin">Administrator</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Max Uses Quota</label>
+            <input type="number" class="form-control" id="inv-quota" value="50" min="1">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Assigned Volunteer Team (Optional)</label>
+          <select class="form-control" id="inv-team">
+            <option value="">None (General Batchmate)</option>
+            <option value="finance">Finance & Accounts</option>
+            <option value="venue">Venue & Hospitality</option>
+            <option value="catering">Food & Menu</option>
+            <option value="entertainment">Entertainment & Mementos</option>
+            <option value="logistics">Transport</option>
+            <option value="comms">Communications & Outreach</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Notes</label>
+          <input type="text" class="form-control" id="inv-notes" placeholder="e.g. Shared in Delhi NCR alumni meetup group">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Generate Invite Code</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reassign Coordinators Modal -->
+  <div class="modal-backdrop" id="modal-reassign-coords">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">👥 Assign Team Coordinators</h3>
+        <button class="modal-close-btn" onclick="App.closeModal('modal-reassign-coords')">&times;</button>
+      </div>
+      <form id="form-reassign-coords" onsubmit="App.handleSaveCoordinators(event)">
+        <input type="hidden" id="reassign-team-id">
+        <div class="form-group">
+          <label class="form-label" id="reassign-team-title">Team: ...</label>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Coordinator 1 (Primary)</label>
+          <select class="form-control" id="coord-select-1">
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Coordinator 2 (Co-Lead)</label>
+          <select class="form-control" id="coord-select-2">
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Save Coordinators</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Sent Reminders Inbox Modal -->
+  <div class="modal-backdrop" id="modal-sent-reminders">
+    <div class="modal-content" style="max-width: 720px;">
+      <div class="modal-header">
+        <h3 class="modal-title">📬 Sent Reminders Log & Email History</h3>
+        <button class="modal-close-btn" onclick="App.closeModal('modal-sent-reminders')">&times;</button>
+      </div>
+      <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Recipient</th>
+              <th>Subject</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="sent-reminders-tbody">
+            <!-- Rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Printable Report Modal -->
+  <div class="modal-backdrop" id="modal-printable-report">
+    <div class="modal-content" style="max-width: 840px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="printable-modal-title">🖨️ Printable Audit Statement</h3>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-primary btn-sm" onclick="window.print()">🖨️ Print Now</button>
+          <button class="modal-close-btn" onclick="App.closeModal('modal-printable-report')">&times;</button>
+        </div>
+      </div>
+      <div id="printable-report-body" style="background: #fff; color: #111; padding: 24px; border-radius: var(--radius-md); font-size: 0.85rem; max-height: 500px; overflow-y: auto;">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Photo Viewer Modal -->
+  <div class="modal-backdrop" id="modal-photo-viewer" onclick="if(event.target === this) App.closePhotoModal();">
+    <div class="modal-content" style="max-width: 920px; padding: 20px; background: rgba(15, 23, 42, 0.96); border-color: var(--border-gold); box-shadow: 0 20px 50px rgba(0,0,0,0.8);">
+      <div class="modal-header" style="margin-bottom: 12px; padding-bottom: 10px;">
+        <h3 class="modal-title" id="photo-viewer-title" style="font-size: 1.15rem; color: var(--accent-gold-light); display: flex; align-items: center; gap: 8px;">
+          <span>📸</span> <span>Reunion Photo</span>
+        </h3>
+        <button class="modal-close-btn" onclick="App.closePhotoModal()" aria-label="Close Photo Viewer">&times;</button>
+      </div>
+      <div style="text-align: center; position: relative;">
+        <img id="photo-viewer-img" src="" alt="Photo Full View" style="max-width: 100%; max-height: 70vh; border-radius: var(--radius-md); object-fit: contain; box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 1px solid var(--border-medium);">
+        <div id="photo-viewer-caption" style="margin-top: 12px; font-size: 0.88rem; color: #cbd5e1; line-height: 1.5; text-align: left; background: rgba(30, 41, 59, 0.6); padding: 10px 14px; border-radius: var(--radius-sm); border-left: 3px solid var(--accent-gold);"></div>
+      </div>
+      <div style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <a id="photo-viewer-download" href="" download="gcp98-reunion-2026.jpg" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 6px;">
+          💾 Download Original High-Res
+        </a>
+        <button class="btn btn-primary btn-sm" onclick="App.closePhotoModal()">
+          Close Preview
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Client-side Logic Script -->
+  <script src="/js/app.js"></script>
+</body>
+</html>
